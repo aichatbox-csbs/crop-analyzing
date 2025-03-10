@@ -247,6 +247,7 @@ def display_crop_info(crop_name):
     if crop:
        
         st.markdown(f"## 🌱 {crop_name} Cultivation Process")
+        st.markdown(f"*🔹 NEXT CROP* {crop['rotation_strategies']}")
         st.markdown(f"*🔹 Optimal Planting Period:* {crop['optimal_period']}")
         st.markdown(f"*🔹 Water Requirement:* {crop['water_requirement']}")
         st.markdown(f"*🔹 Suitable Soil Type:* {crop['soil_type']}")
