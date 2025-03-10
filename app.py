@@ -265,37 +265,7 @@ def display_past_history(crop_name):
         }
         st.dataframe(history_data, width=700)
 
-# Select crop dynamically
-crop = st.selectbox("Select a Crop", list(crops.keys()))  # User selects crop
-crop_data = crops[crop]  # Access crop details
 
-# Define years for past yields
-years = [2019, 2020, 2021, 2022, 2023]
-
-# Create DataFrame
-df = pd.DataFrame({'Year': years, 'Yield (tons)': crop_data['past_yields']})
-
-# Create Matplotlib bar chart
-fig, ax = plt.subplots(figsize=(8, 5))
-ax.bar(df['Year'], df['Yield (tons)'], color='green', edgecolor='black')
-
-# Customize plot
-ax.set_xlabel("Year", fontsize=12)
-ax.set_ylabel("Yield (tons)", fontsize=12)
-ax.set_title(f"{crop} Past Yields Over the Years", fontsize=14)
-ax.grid(axis='y', linestyle='--', alpha=0.7)
-
-# Display crop details in Streamlit
-st.title(f"{crop} Cultivation Overview")
-st.write(f"**Optimal Period:** {crop_data['optimal_period']}")
-st.write(f"**Soil Type:** {crop_data['soil_type']}")
-st.write(f"**Soil Health Tip:** {crop_data['soil_health']}")
-st.write(f"**Water Management:** {crop_data['water_management']}")
-st.write(f"**Water Requirement:** {crop_data['water_requirement']} mm")
-st.write(f"**Crop Rotation Strategies:** {', '.join(crop_data['rotation_strategies'])}")
-
-# Show plot in Streamlit
-st.pyplot(fig)
 # Streamlit UI with Sidebar Navigation
 st.set_page_config(page_title="Smart Farming Assistant", layout="wide")
 
