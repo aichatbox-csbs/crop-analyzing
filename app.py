@@ -1,5 +1,8 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 
 # Define crop data
 crops = {
@@ -238,58 +241,66 @@ crops = {
 def get_crop_details(crop_name):
     return crops.get(crop_name, {})
 
-# Function to display crop information
-def display_crop_info(crop_name):
-    crop = get_crop_details(crop_name)
-    if crop:
-        st.markdown(f"## 🌱 {crop_name} Cultivation Process")
-        st.markdown(f"**🔹 Optimal Planting Period:** {crop['optimal_period']}")
-        st.markdown(f"**🔹 Water Requirement:** {crop['water_requirement']}")
-        st.markdown(f"**🔹 Suitable Soil Type:** {crop['soil_type']}")
-        st.markdown(f"**🔹 Cultivation Steps:** {crop['process']}")
-
-# Function to display past history with table and bar chart
-def display_past_history(crop_name):
-    crop = get_crop_details(crop_name)
-    if crop:
-        st.markdown(f"## 📜 Past History of {crop_name} Cultivation")
+def main():
+    st.title("Farmer's Assistant App")
+    
+    # Sidebar Navigation
+    menu = ["Crop Selection", "Soil Health Prediction", "Crop Prediction", "Crop Details"]
+    choice = st.sidebar.selectbox("Select Feature", menu)
+    
+    if choice == "Crop Selection":
+        st.subheader("Select the Best Crop for Your Land")
+        # Crop selection logic here
         
-        history_data = pd.DataFrame({
-            "Category": ["Rotation Crops", "Soil Health", "Water Management"],
-            "Details": [', '.join(crop['rotation_strategies']), crop['soil_health'], crop['water_management']]
-        })
-        st.dataframe(history_data, width=700)
+    elif choice == "Soil Health Prediction":
+        st.subheader("Soil Health Analysis")
+        # Soil health prediction logic here
         
+    elif choice == "Crop Prediction":
+        st.subheader("Crop Prediction Based on Input Data")
+        # Crop prediction logic here
         
-# Streamlit UI with Sidebar Navigation
-st.set_page_config(page_title="Smart Farming Assistant", layout="wide")
-
-st.sidebar.title("🌾 Smart Farming Assistant")
-selected_option = st.sidebar.radio("Navigation", ["Home", "Crop Details", "Past History"])
-
-st.sidebar.markdown("### 🌍 Select a Crop")
-selected_crop = st.sidebar.selectbox("Choose a crop:", list(crops.keys()))
-
-st.sidebar.markdown("💡 Developed to support farmers with optimized cultivation practices. JAI KISAAN! JAI JAVAAN!!")
-
-# Page Routing
-if selected_option == "Home":
-    st.title("Welcome to the Smart FARMING Assistant 🚜")
-    st.markdown("""
-        This tool provides insights into various crops, including:
-        - 🔄 CROP Rotation Strategies  
-        - 🌱 Best planting periods  
-        - 🌾 Suitable soil types  
-        - 💧 Water management techniques  
-        - 📜 Past cultivation histories  
+    elif choice == "Crop Details":
+        st.subheader("Detailed Crop Information")
+        crop = st.selectbox("Select a Crop", ["Wheat", "Rice", "Corn", "Soybean"])
         
-        Use the sidebar navigation to explore detailed information!
-    """)
+        if crop:
+            st.write(f"## {crop} Details")
+            st.write("### Suitable Climate and Soil")
+            st.write("Information about the best climate and soil conditions for the selected crop.")
+            
+            # Highlighting Crop Rotation Section
+            st.markdown("### :green[Crop Rotation Benefits]")
+            st.write("Explanation on how rotating crops improves soil fertility and yield.")
+            
+            # Past Yield Graphs
+            st.markdown("### Past Yield Trends")
+            yield_data = {
+                "Year": [2020, 2021, 2022, 2023, 2024],
+                "Yield (tons)": [50, 55, 53, 60, 58]
+            }
+            df = pd.DataFrame(yield_data)
+            
+            fig, ax = plt.subplots()
+            sns.lineplot(x='Year', y='Yield (tons)', data=df, marker='o', ax=ax)
+            ax.set_title(f"{crop} Past Yield Trends")
+            ax.set_xlabel("Year")
+            ax.set_ylabel("Yield (tons)")
+            st.pyplot(fig)
+            
+    # Hover Effect for Better UI
+    st.markdown(
+        """
+        <style>
+        div:hover {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    
+if __name__ == "__main__":
+    main()
 
-elif selected_option == "Crop Details":
-    if selected_crop:
-        display_crop_info(selected_crop)
-
-elif selected_option == "Past History":
-    if selected_crop:
-        display_past_history(selected_crop)
