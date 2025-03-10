@@ -1,4 +1,5 @@
 import streamlit as st
+import plotly.express as px
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -264,6 +265,37 @@ def display_past_history(crop_name):
             "Details": [', '.join(crop['rotation_strategies']), crop['soil_health'], crop['water_management']]
         }
         st.dataframe(history_data, width=700)
+
+# Define years for past yields
+years = [2019, 2020, 2021, 2022, 2023]
+
+# Create DataFrame
+df = pd.DataFrame({'Year': years, 'Yield (tons)': rice_data['past_yields']})
+
+# Create Plotly bar chart
+fig = px.bar(df, x='Year', y='Yield (tons)',
+             title="Rice Past Yields Over the Years",
+             labels={'Year': 'Year', 'Yield (tons)': 'Yield (tons)'},
+             color='Yield (tons)', color_continuous_scale="YlGn")
+
+# Customize layout
+fig.update_layout(
+    xaxis=dict(showgrid=False),
+    yaxis=dict(showgrid=True),
+    plot_bgcolor="white",
+    font=dict(family="Arial", size=14),
+)
+# Display details in Streamlit
+st.title("Rice Cultivation Overview")
+st.write(f"**Optimal Period:** {rice_data['optimal_period']}")
+st.write(f"**Soil Type:** {rice_data['soil_type']}")
+st.write(f"**Soil Health Tip:** {rice_data['soil_health']}")
+st.write(f"**Water Management:** {rice_data['water_management']}")
+st.write(f"**Water Requirement:** {rice_data['water_requirement']} mm")
+st.write(f"**Crop Rotation Strategies:** {', '.join(rice_data['rotation_strategies'])}")
+
+# Show plot in Streamlit
+st.plotly_chart(fig)
 
 # Streamlit UI with Sidebar Navigation
 st.set_page_config(page_title="Smart Farming Assistant", layout="wide")
