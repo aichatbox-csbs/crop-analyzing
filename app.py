@@ -269,7 +269,7 @@ def display_past_history(crop_name):
 years = [2019, 2020, 2021, 2022, 2023]
 
 # Create DataFrame
-df = pd.DataFrame({'Year': years, 'Yield (tons)': rice_data['past_yields']})
+df = pd.DataFrame({'Year': years, 'Yield (tons)': crop['past_yields']})
 
 # Create Matplotlib bar chart
 fig, ax = plt.subplots(figsize=(8, 5))
@@ -278,17 +278,17 @@ ax.bar(df['Year'], df['Yield (tons)'], color='skyblue', edgecolor='black')
 # Customize plot
 ax.set_xlabel("Year", fontsize=12)
 ax.set_ylabel("Yield (tons)", fontsize=12)
-ax.set_title("Rice Past Yields Over the Years", fontsize=14)
+ax.set_title(" Past Yields Over the Years", fontsize=14)
 ax.grid(axis='y', linestyle='--', alpha=0.7)
 
 # Display details in Streamlit
-st.title("Rice Cultivation Overview")
-st.write(f"**Optimal Period:** {rice_data['optimal_period']}")
-st.write(f"**Soil Type:** {rice_data['soil_type']}")
-st.write(f"**Soil Health Tip:** {rice_data['soil_health']}")
-st.write(f"**Water Management:** {rice_data['water_management']}")
-st.write(f"**Water Requirement:** {rice_data['water_requirement']} mm")
-st.write(f"**Crop Rotation Strategies:** {', '.join(rice_data['rotation_strategies'])}")
+st.title("Cultivation Overview")
+st.write(f"**Optimal Period:** {crop['optimal_period']}")
+st.write(f"**Soil Type:** {crop['soil_type']}")
+st.write(f"**Soil Health Tip:** {crop['soil_health']}")
+st.write(f"**Water Management:** {crop['water_management']}")
+st.write(f"**Water Requirement:** {crop['water_requirement']} mm")
+st.write(f"**Crop Rotation Strategies:** {', '.join(crop['rotation_strategies'])}")
 
 # Show plot in Streamlit
 st.pyplot(fig)
