@@ -245,8 +245,7 @@ def get_crop_details(crop_name):
 def display_crop_info(crop_name):
     crop = get_crop_details(crop_name)
     if crop:
-        st.markdown(f'<img src="{crop["image"]}" style="width:100%; max-height:400px; object-fit:cover;">', unsafe_allow_html=True)
-
+       
         st.markdown(f"## 🌱 {crop_name} Cultivation Process")
         st.markdown(f"*🔹 Optimal Planting Period:* {crop['optimal_period']}")
         st.markdown(f"*🔹 Water Requirement:* {crop['water_requirement']}")
