@@ -264,6 +264,28 @@ def display_past_history(crop_name):
             "Details": [', '.join(crop['rotation_strategies']), crop['soil_health'], crop['water_management']]
         }
         st.dataframe(history_data, width=700)
+        # Select crop dynamically
+crop = st.selectbox("Select a Crop", list(crops.keys()))  # User selects crop
+crop_data = crops[crop]  # Access crop details
+
+# Define years for past yields
+years = [2019, 2020, 2021, 2022, 2023]
+
+# Create DataFrame
+df = pd.DataFrame({'Year': years, 'Yield (tons)': crop_data['past_yields']})
+
+# Create Matplotlib bar chart
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.bar(df['Year'], df['Yield (tons)'], color='green', edgecolor='black')
+
+# Customize plot
+ax.set_xlabel("Year", fontsize=12)
+ax.set_ylabel("Yield (tons)", fontsize=12)
+ax.set_title(f"{crop} Past Yields Over the Years", fontsize=14)
+ax.grid(axis='y', linestyle='--', alpha=0.7)
+
+# Show plot in Streamlit
+st.pyplot(fig)
 
 
 # Streamlit UI with Sidebar Navigation
