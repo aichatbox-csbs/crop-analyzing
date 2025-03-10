@@ -260,13 +260,7 @@ def display_past_history(crop_name):
         })
         st.dataframe(history_data, width=700)
         
-        if 'past_yields' in crop:
-            yield_data = pd.DataFrame(list(crop['past_yields'].items()), columns=['Year', 'Yield (kg/ha)'])
-            fig = px.bar(yield_data, x='Year', y='Yield (kg/ha)', title=f'Past Yields of {crop_name}',
-                         labels={'Year': 'Year', 'Yield (kg/ha)': 'Yield (kg/ha)'},
-                         color='Yield (kg/ha)', text_auto=True)
-            st.plotly_chart(fig)
-
+        
 # Streamlit UI with Sidebar Navigation
 st.set_page_config(page_title="Smart Farming Assistant", layout="wide")
 
